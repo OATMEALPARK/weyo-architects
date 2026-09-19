@@ -1,0 +1,232 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WE.YO ARCHITECTS</title><style>:root {
+  --bg: #f5f4f0;
+  --paper: #fbfaf7;
+  --ink: #151515;
+  --muted: #66645e;
+  --line: rgba(21,21,21,.23);
+  --pad: clamp(20px, 3.2vw, 56px);
+  --serif: 'Times New Roman', 'Noto Serif KR', serif;
+  --sans: Arial, 'Helvetica Neue', 'Noto Sans KR', sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block;width:100%;height:100%;object-fit:cover;background:#ddd8cf}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+::selection{background:#1c1c1c;color:#fff}
+
+.site-header{position:fixed;z-index:50;top:0;left:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:22px var(--pad);color:var(--ink);transition:color .48s cubic-bezier(.22,.61,.36,1),background .38s ease,border-color .38s ease}
+.site-header.on-hero{color:#fff}
+.site-header.hero-dark{color:#fff}
+.site-header.hero-light{color:var(--ink)}
+.site-header.scrolled{background:rgba(245,244,240,.94);backdrop-filter:blur(10px);border-bottom:1px solid rgba(0,0,0,.08);color:var(--ink)}
+.brand{font-size:18px;letter-spacing:.02em;font-weight:600}
+.desktop-nav{display:flex;gap:34px;font-size:11px;letter-spacing:.13em}
+.desktop-nav a,.mobile-menu a,.filter-btn,.text-link{position:relative}
+.desktop-nav a:after,.text-link:after{content:'';position:absolute;left:0;right:100%;bottom:-3px;border-bottom:1px solid currentColor;transition:right .3s ease}
+.desktop-nav a:hover:after,.text-link:hover:after{right:0}
+.mobile-toggle{display:none;width:27px;height:17px;position:relative}.mobile-toggle span{display:block;width:100%;height:1px;background:currentColor;transform-origin:center;transition:transform .28s ease,opacity .2s ease}.mobile-toggle.open span:nth-child(1){transform:translateY(8px) rotate(45deg)}.mobile-toggle.open span:nth-child(2){opacity:0}.mobile-toggle.open span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+.mobile-menu{position:fixed;z-index:45;inset:0;background:var(--bg);padding:110px var(--pad) 40px;display:flex;flex-direction:column;justify-content:space-between;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.mobile-menu.open{opacity:1;pointer-events:auto}
+.mobile-menu nav{display:flex;flex-direction:column;gap:18px;font-family:var(--serif);font-size:clamp(38px,12vw,64px);line-height:1}
+.mobile-menu small{font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+
+.hero{position:relative;height:100svh;min-height:640px;background:#111;overflow:hidden;color:#fff}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.15s ease;z-index:1;background-size:cover;background-position:center;background-repeat:no-repeat}
+.hero-slide.active{opacity:1;z-index:2}
+.hero-slide:after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0) 0%,rgba(0,0,0,0) 50%,rgba(0,0,0,.34) 100%)}
+.hero-slide img{position:absolute;inset:0}
+.hero-meta{position:absolute;z-index:4;left:var(--pad);right:var(--pad);bottom:30px;display:grid;grid-template-columns:110px 1fr auto;align-items:end;gap:24px}
+.hero-count{font-size:10px;letter-spacing:.12em}
+.hero-title{font-family:var(--serif);font-size:clamp(30px,4vw,62px);line-height:.95;font-weight:400}
+.hero-info{text-align:right;font-size:10px;letter-spacing:.08em;text-transform:uppercase;line-height:1.7}
+.hero-controls{position:absolute;z-index:8;right:var(--pad);bottom:118px;display:flex;gap:16px;font-size:10px;letter-spacing:.1em}
+.hero-controls button{color:#fff}
+
+.statement{padding:clamp(120px,17vw,260px) var(--pad);display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.statement-mark{grid-column:1/5;font-family:var(--serif);font-size:clamp(72px,11vw,168px);line-height:.8;font-weight:400}
+.statement-copy{grid-column:7/12;align-self:end;padding-top:110px}
+.eyebrow{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:24px}
+.statement-copy p{font-family:var(--serif);font-size:clamp(22px,2.25vw,36px);line-height:1.42;margin:0;word-break:keep-all}
+.statement-copy .small-ko{margin-top:34px;max-width:520px;font-family:var(--sans);font-size:14px;line-height:1.9;color:#4e4d48}
+
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;margin:0 var(--pad) 70px;padding-top:8px;border-top:1px solid var(--line)}
+.section-head h2{font-size:11px;letter-spacing:.14em;font-weight:400;margin:14px 0 0}
+.section-head span{font-size:10px;letter-spacing:.1em;color:var(--muted)}
+.selected{padding:0 0 clamp(150px,20vw,300px)}
+.work-item{display:grid;grid-template-columns:repeat(12,1fr);gap:18px;margin:0 var(--pad) clamp(110px,14vw,210px)}
+.work-media{overflow:hidden;background:#ddd7cc}
+.work-media img{transition:transform .8s cubic-bezier(.2,.65,.2,1)}
+.work-item:hover .work-media img{transform:scale(1.018)}
+.work-caption{padding-top:14px;border-top:1px solid var(--line);margin-top:10px;display:flex;justify-content:space-between;gap:20px}
+.work-caption h3{font-family:var(--serif);font-size:clamp(20px,2vw,30px);font-weight:400;margin:0}
+.work-caption p{margin:2px 0 0;text-align:right;font-size:9px;letter-spacing:.1em;line-height:1.7;text-transform:uppercase;color:var(--muted)}
+.work-item:nth-child(1) .work-block{grid-column:1/10}
+.work-item:nth-child(2) .work-block{grid-column:7/13}
+.work-item:nth-child(3) .work-block{grid-column:2/13}
+.work-item:nth-child(4) .work-block{grid-column:1/7}
+.work-item:nth-child(5) .work-block{grid-column:5/12}
+.work-item:nth-child(1) .work-media{aspect-ratio:16/10}
+.work-item:nth-child(2) .work-media{aspect-ratio:4/5}
+.work-item:nth-child(3) .work-media{aspect-ratio:17/9}
+.work-item:nth-child(4) .work-media{aspect-ratio:4/5}
+.work-item:nth-child(5) .work-media{aspect-ratio:16/10}
+
+.all-projects-cta{margin:0 var(--pad) clamp(150px,17vw,260px);padding:26px 0 30px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-family:var(--serif);font-size:clamp(34px,6vw,92px);line-height:1}
+.all-projects-cta span:last-child{font-family:var(--sans);font-size:20px}
+
+.studio-tease{padding:0 var(--pad) clamp(150px,18vw,280px);display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.studio-tease .left{grid-column:1/4;font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+.studio-tease .right{grid-column:6/13}
+.phrase-line1,.phrase-line2{display:inline}.studio-tease blockquote{font-family:var(--serif);font-size:clamp(28px,4vw,58px);line-height:1.18;margin:0 0 40px;max-width:1000px}
+
+.footer{border-top:1px solid var(--line);margin:0 var(--pad);padding:28px 0 38px;display:grid;grid-template-columns:1.4fr 1.25fr 1fr 1.35fr;gap:28px;font-size:10px;line-height:1.8;letter-spacing:.04em}
+.footer .footer-kicker{font-family:var(--serif);font-size:16px;line-height:1.35;letter-spacing:0}
+.footer .footer-label{display:block;margin-bottom:8px;font-size:9px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.footer .right{text-align:right}
+.footer .copyright{font-size:9px;color:var(--muted);line-height:1.7}
+
+.page-main{padding-top:130px;min-height:80vh}
+.page-title{margin:0 var(--pad) 100px;display:grid;grid-template-columns:repeat(12,1fr);gap:18px;align-items:end}
+.page-title h1{grid-column:1/7;font-family:var(--serif);font-size:clamp(70px,12vw,180px);font-weight:400;line-height:.8;margin:0}
+.page-title p{grid-column:9/13;margin:0 0 8px;font-size:12px;line-height:1.8;color:var(--muted)}
+.filters{display:flex;gap:28px;margin:0 var(--pad) 56px;padding-top:14px;border-top:1px solid var(--line);flex-wrap:wrap}
+.filter-btn{font-size:10px;letter-spacing:.13em;color:var(--muted)}
+.filter-btn.active{color:var(--ink)}
+.filter-btn.active:after{content:'';position:absolute;left:0;right:0;bottom:-5px;border-bottom:1px solid var(--ink)}
+.archive-grid{margin:0 var(--pad) 180px;display:grid;grid-template-columns:1fr 1fr;column-gap:32px;row-gap:90px}
+.archive-card{display:block}
+.archive-image{aspect-ratio:4/3;overflow:hidden;background:#ddd8cf}
+.archive-card:nth-child(4n+2) .archive-image,.archive-card:nth-child(4n+3) .archive-image{aspect-ratio:5/6}
+.archive-image img{transition:transform .7s ease}
+.archive-card:hover img{transform:scale(1.018)}
+.archive-caption{display:flex;justify-content:space-between;gap:20px;padding-top:12px;border-top:1px solid var(--line);margin-top:9px}
+.archive-caption strong{font-family:var(--serif);font-size:20px;font-weight:400}
+.archive-caption span{text-align:right;font-size:9px;line-height:1.7;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+.detail-hero{height:92svh;min-height:620px;background:#ddd8cf}
+.detail-hero img{object-fit:cover}
+.detail-intro{padding:70px var(--pad) 140px;display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.detail-title{grid-column:1/8;font-family:var(--serif);font-size:clamp(54px,8vw,128px);font-weight:400;line-height:.9;margin:0;word-break:keep-all}
+.detail-meta-top{grid-column:9/13;align-self:end;font-size:10px;line-height:1.8;letter-spacing:.09em;text-transform:uppercase}
+.detail-info{margin:0 var(--pad) 120px;padding-top:18px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);gap:36px}
+.info-cell label{display:block;font-size:9px;letter-spacing:.13em;color:var(--muted);margin-bottom:8px}
+.info-cell div{font-size:12px}
+.detail-description{margin:0 var(--pad) 160px;display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.detail-description p{grid-column:6/11;font-family:var(--serif);font-size:clamp(20px,2.2vw,34px);line-height:1.55;margin:0;word-break:keep-all}
+.gallery{padding-bottom:160px}
+.gallery-row{margin-bottom:clamp(60px,9vw,140px);padding:0 var(--pad);display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.gallery-row.full{padding:0}
+.gallery-row.full .gallery-img{grid-column:1/13;aspect-ratio:16/9}
+.gallery-row.wide .gallery-img{grid-column:2/12;aspect-ratio:16/10}
+.gallery-row.portrait .gallery-img{grid-column:7/12;aspect-ratio:4/5}
+.gallery-row.pair .gallery-img:first-child{grid-column:1/7;aspect-ratio:4/5}
+.gallery-row.pair .gallery-img:last-child{grid-column:7/13;aspect-ratio:4/5}
+.project-nav{margin:0 var(--pad) 80px;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+
+.studio-grid{margin:0 var(--pad) 180px;display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.studio-word{grid-column:1/6;font-family:var(--serif);font-size:clamp(72px,11vw,164px);line-height:.8}
+.studio-philosophy{grid-column:7/12;padding-top:120px}
+.studio-philosophy p{font-family:var(--serif);font-size:clamp(24px,2.5vw,38px);line-height:1.5;margin:0;word-break:keep-all}
+.people{margin:0 var(--pad) 180px;border-top:1px solid var(--line)}
+.person{padding:28px 0 62px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.person h2{grid-column:1/5;font-family:var(--serif);font-size:clamp(28px,3.5vw,52px);font-weight:400;margin:0}
+.person .bio{grid-column:7/12;display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:11px;line-height:1.8}
+.person .bio b{font-size:9px;letter-spacing:.12em;font-weight:400;color:var(--muted);display:block;margin-bottom:8px}
+.contact-wrap{margin:0 var(--pad) 180px;display:grid;grid-template-columns:repeat(12,1fr);gap:18px;min-height:52vh}
+.contact-primary{grid-column:1/7;font-family:var(--serif);font-size:clamp(38px,6vw,90px);line-height:1.05}
+.contact-list{grid-column:8/13;align-self:end;border-top:1px solid var(--line)}
+.contact-row{display:grid;grid-template-columns:1fr 2fr;gap:20px;padding:16px 0;border-bottom:1px solid var(--line);font-size:11px}
+.contact-row span:first-child{font-size:9px;letter-spacing:.12em;color:var(--muted)}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width: 820px){
+  :root{--pad:20px}
+  .desktop-nav{display:none}
+  .mobile-toggle{display:flex;flex-direction:column;justify-content:space-between;z-index:90}
+  .site-header{padding:18px 20px;z-index:100}
+  .mobile-menu{z-index:80;padding:108px 20px 36px}
+  body.menu-open .site-header{color:var(--ink)!important;background:transparent;border-color:transparent}
+  .hero{min-height:560px}
+  .hero-meta{left:20px;right:20px;bottom:90px;display:block}
+  .hero-count{display:block;margin-bottom:12px;font-size:10px;letter-spacing:.12em}
+  .hero-title{display:block;max-width:calc(100vw - 40px);font-size:clamp(38px,11vw,50px);line-height:1.02;word-break:keep-all}
+  .hero-info{display:block;text-align:left;margin-top:18px;font-size:10px;line-height:1.65}
+  .hero-controls{right:20px;bottom:28px;gap:24px;font-size:10px}
+  .brand-phrase .phrase-line1,.footer-kicker .phrase-line1{display:block;white-space:nowrap}
+  .brand-phrase .phrase-line2,.footer-kicker .phrase-line2{display:block;white-space:nowrap;word-break:keep-all}
+  .statement{display:block;padding:120px 20px 150px}
+  .statement-mark{font-size:28vw;margin-bottom:120px}
+  .statement-copy{padding:0}
+  .statement-copy p{font-size:28px;line-height:1.45}
+  .section-head{margin:0 20px 54px}
+  .work-item{display:block;margin:0 20px 100px}
+  .work-item .work-block{width:100%}
+  .work-item:nth-child(n) .work-media{aspect-ratio:4/3}
+  .work-caption{display:block}.work-caption p{text-align:left;margin-top:10px}
+  .all-projects-cta{margin:0 20px 150px;font-size:48px}
+  .studio-tease{display:block;padding:0 20px 150px}.studio-tease .left{margin-bottom:70px}.phrase-line1,.phrase-line2{display:inline}.studio-tease blockquote{font-size:34px}
+  .footer{margin:0 20px;grid-template-columns:1fr 1fr;gap:30px 20px}.footer .middle{display:block}.footer .right{text-align:left}.footer .copyright{grid-column:1/-1}
+  .page-main{padding-top:110px}
+  .page-title{display:block;margin:0 20px 76px}.page-title h1{font-size:22vw;margin-bottom:46px}.page-title p{max-width:360px}
+  .filters{margin:0 20px 42px;gap:19px}
+  .archive-grid{margin:0 20px 120px;grid-template-columns:1fr;row-gap:70px}.archive-card:nth-child(n) .archive-image{aspect-ratio:4/3}
+  .detail-hero{height:76svh;min-height:500px}
+  .detail-intro{display:block;padding:48px 20px 90px}.detail-title{font-size:15vw;margin-bottom:44px}.detail-meta-top{font-size:9px}
+  .detail-info{margin:0 20px 90px;grid-template-columns:1fr 1fr;gap:28px 20px}
+  .detail-description{display:block;margin:0 20px 110px}.detail-description p{font-size:24px}
+  .gallery{padding-bottom:100px}.gallery-row{display:block;padding:0 20px;margin-bottom:64px}.gallery-row.full{padding:0}.gallery-row:nth-child(n) .gallery-img{aspect-ratio:auto}.gallery-img img{height:auto}
+  .gallery-row.pair .gallery-img+ .gallery-img{margin-top:20px}
+  .project-nav{margin:0 20px 60px}
+  .studio-grid{display:block;margin:0 20px 120px}.studio-word{font-size:24vw;margin-bottom:100px}.studio-philosophy{padding:0}.studio-philosophy p{font-size:27px}
+  .people{margin:0 20px 120px}.person{display:block}.person h2{margin-bottom:44px}.person .bio{display:grid;grid-template-columns:1fr;gap:28px}
+  .contact-wrap{display:block;margin:0 20px 120px;min-height:55vh}.contact-primary{font-size:13vw;margin-bottom:120px}.contact-list{margin-top:80px}.contact-row{font-size:13px;align-items:center}.contact-row span:first-child{font-size:10px;line-height:1}.contact-row span:last-child{line-height:1.3}
+}
+</style></head><body><div id="app"></div><script>
+const P=[{"slug":"haengdang","title":"행당동 상가주택 리모델링","tags":["COMMERCIAL","RENOVATION"],"display":"Residential + Commercial","location":"Haengdang-dong, Seongdong-gu, Seoul","year":"2026","program":"Residential + Commercial","status":"Completed","site":"310.00㎡","gross":"941.64㎡","imgs":["17e516_9cb5ac6c996e473ba8ca84a4d0dd5b42~mv2.jpg","17e516_5f675dc95fd441668f691a81a5b70417~mv2.jpg","17e516_612405d805b84eb6821d122095b32c42~mv2.jpg","17e516_da791fe394a74975bb6a099851ee97cb~mv2.jpg","17e516_2d6f3c9532f64c55bf2d0767b5077aa7~mv2.jpg","17e516_5907be3e4d884785a57c5c8edd17692d~mv2.jpg","17e516_39fe7efdf96e4bdb9d510f9005b4e851~mv2.png"]},{"slug":"geoyeo","title":"거여동 상가주택","tags":["RESIDENTIAL","COMMERCIAL"],"display":"Residential + Commercial","location":"Geoyeo-dong, Songpa-gu, Seoul","year":"2025","program":"Residential + Commercial","status":"Schematic Design","site":"244.10㎡","gross":"498.06㎡","imgs":["17e516_0b0c4dd70fe942c9a2cb47136ed4d474~mv2.jpg","17e516_22d83da3ab0046eea9e9fcb221379366~mv2.jpg","17e516_14e2393f7d5641b486adbc1d14a69e34~mv2.jpg","17e516_c56fa81549804cba91b0e8e4d273aa23~mv2.jpg","17e516_85331d015577457691b585273a251a97~mv2.jpg","17e516_4382d140e6fc493595f2c774bd499deb~mv2.jpg","17e516_5e93528f90084e8caf9d89cd3d15c573~mv2.jpg","17e516_43c62d886060414bbdceda0ab3822f17~mv2.jpg","17e516_9139ad4687c4410bbb5239abe84d7dcd~mv2.jpg","17e516_c731110af5e2480693eb637fe08e43f9~mv2.jpg","17e516_4127c91be690409cbdc2f547073ea165~mv2.jpg","17e516_ef2dd91684914b5e8f107666263e2b0c~mv2.jpg","17e516_db9e775fb6344de58a0316e6f77561a3~mv2.jpg"]},{"slug":"seongbuk","title":"성북동 단독주택","tags":["RESIDENTIAL"],"display":"Residential","location":"Seongbuk-dong, Seongbuk-gu, Seoul","year":"2024","program":"Residential","status":"Schematic Design","site":"227.74㎡","gross":"187.83㎡","imgs":["17e516_06960f197b3f4d82bf3b6651728c36f7~mv2.jpg","17e516_b0e2eaeee1b945eb878200807850869e~mv2.jpg","17e516_0c66ec27aa0a4974803aff603aaff7ca~mv2.jpg","17e516_f0bf119be3a14909bc13c99926a79b79~mv2.jpg","17e516_1339963ded404ab98137ee76e25e3da8~mv2.jpg","17e516_d8c68d05652e4686a988c2f550c23aaa~mv2.jpg","17e516_7982ca542a054d36a4cbdac4b15b4ced~mv2.jpg","17e516_6c6ef9457a5a473da0335c04906acc85~mv2.jpg","17e516_fbf5ff1116664e8ea35db339dad4c73f~mv2.jpg","17e516_69999da6069b475b836f3608beb7a462~mv2.jpg","17e516_316150dcedee4b3fa75480d1dddeeecb~mv2.jpg","17e516_3d9ce27d64b04b269a250f8d16162468~mv2.jpg","17e516_752d233c4a264abeb5dd5051cbadcd62~mv2.jpg","17e516_72fad286d60a45cdbd351cf2b8f37ae8~mv2.jpg"]},{"slug":"gaegum","title":"개금동 노유자시설","tags":["COMPETITION"],"display":"Competition","location":"Gaegum-dong, Busanjin-gu, Busan","year":"2024","program":"Senior welfare Institution","status":"Participation in Competition","site":"758.04㎡","gross":"1,960.62㎡","imgs":["17e516_858c98e39a9a4e27ba8cfe9faa9f5b3e~mv2.jpg","17e516_886017de8af84074bf4c50253868202e~mv2.jpg","17e516_c2dd5404fecf4a7ca70f0f8a40c17bd2~mv2.jpg","17e516_2bca8676065f47bb984b834562cae03b~mv2.jpg","17e516_46691896ef454c1c80136dbf35d229cd~mv2.jpg","17e516_67316accdb5843f4aad188b464048550~mv2.jpg","17e516_fa1b4c72f23e433dbeb423585deb3aa1~mv2.jpg"]},{"slug":"goun","title":"고운동 단독주택","tags":["RESIDENTIAL"],"display":"Residential","location":"Goun-dong, Saejong","year":"2022","program":"Residential","status":"Schematic Design","site":"367.20㎡","gross":"235.96㎡","imgs":["17e516_5654a73669094e4283a375c935b3d104~mv2.jpg","17e516_3a91923566c14569a14ccb30a0ee5caa~mv2.jpg","17e516_b8012b65a21f40e8924ab95f32c629e5~mv2.jpg","17e516_ee5696850cdc4686ab6b02aefedebe5b~mv2.jpg","17e516_bb03234905b142eba398bc1017c615f3~mv2.jpg","17e516_7708b2da60bc45a1841bb3eb9797d22b~mv2.jpg","17e516_1123abf2f9564f58a7ce1828382e27f3~mv2.jpg","17e516_3ec16bfa608442bea21a92a8f2c822cc~mv2.jpg","17e516_0ad44b81e75346b4bbc7aaf9a3e249be~mv2.jpg","17e516_1bea60e278b8420c8155593cf6b2bddc~mv2.jpg","17e516_446447084fa2414f94f27f8387554a43~mv2.jpg","17e516_0475b5b53d674268b0a29d454849634c~mv2.jpg","17e516_cd2e41530a1a4a4f8d77b589e9764a28~mv2.jpg","17e516_9fb1f8b86a0f47e6af492386902d99a5~mv2.jpg","17e516_b94bc62203d048cfa61e4e9495027837~mv2.jpg","17e516_4c1916585d454f0bbf410c88336a2325~mv2.jpg","17e516_dea3a84682514e4e8581502380a8bdde~mv2.jpg","17e516_87de62f221cb433da3d8fe9159aaf05a~mv2.jpg","17e516_a44c8843d6e343bd85d541dde3a58b1f~mv2.jpg","17e516_eef9c6584a954511a756a19b4104ba9c~mv2.jpg","17e516_4a385b8922b64074850ab73e7eb384b9~mv2.jpg","17e516_7f22e7d0e5cc4c459e41b6b664841972~mv2.jpg","17e516_05a764774ff54824a214faf79e69f324~mv2.jpg","17e516_78bdebdd728c43dab68daf828caefe44~mv2.jpg","17e516_369dcf767c014db79d00ab189be6e57f~mv2.jpg"]},{"slug":"hannam","title":"한남동 상가주택","tags":["RESIDENTIAL","COMMERCIAL"],"display":"Residential + Commercial","location":"Hannam-dong, Yongsan-gu, Seoul","year":"2020","program":"Residential + Commercial","status":"Design Proposal","site":"135.50㎡","gross":"326.23㎡","imgs":["17e516_6bdbeb16d14949a0a5d3a12e2ae4222a~mv2.jpg","17e516_217e66dd9b044669b0d48fbdef580847~mv2.jpg","17e516_2f8cf439071e4c3c962533eb8dcc561c~mv2.jpg","17e516_66ec03ab611e4570b38372bc101db91e~mv2.jpg","17e516_1081c23cd0134de8ade64d0e187b8c88~mv2.jpg","17e516_14f8fa715a1644178407f28e5c2cc461~mv2.jpg","17e516_0083dabd05bb498799b72bbe73412d9e~mv2.jpg","17e516_a92ebd9f23d946d98e9ec4a58bf82bc3~mv2.jpg","17e516_5dc6a7798d804c2cb8321fad7e926568~mv2.jpg","17e516_6953cacdaf7a427fa8ddcd4c73dae8e2~mv2.jpg","17e516_acb851155f2344c7bb2537bb3a7d182f~mv2.jpg","17e516_a041ce44c55042a5a9de7e9f3c228e71~mv2.jpg","17e516_0f6e9d35fd55490fa11fe78255857617~mv2.jpg","17e516_44cbd2c529314e808850ceb1f411f949~mv2.jpg","17e516_7498ebd62d224517afaf0eb5a42b003f~mv2.jpg","17e516_1d8f167c98664c268107dbaefd3babfc~mv2.jpg","17e516_859c39c6b1824678bc24ab66e0246227~mv2.jpg","17e516_9b7d96ca0849463b9332135b730b215a~mv2.jpg","17e516_cd4bf4fba13f45ed8a700c4f6da6d414~mv2.jpg","17e516_f27ac508b88a4924ba1896173408cd49~mv2.jpg","17e516_159f9b984cb444f59ba0c281094c46af~mv2.jpg","17e516_b1ff1327230741b9b5c653df47a7e578~mv2.jpg","17e516_4404ea60990946bb811c89c249ac63e7~mv2.jpg","17e516_04fbd05066c147e4980501c097c99e9c~mv2.jpg","17e516_03a4c19ebb094b95b7937109e48ebb75~mv2.jpg"]},{"slug":"daechi","title":"대치동 근린생활시설","tags":["COMMERCIAL"],"display":"Commercial","location":"Daechi-dong, Gangnam-gu, Seoul","year":"2024","program":"Commercial","status":"Design Proposal","site":"201.50㎡","gross":"558.44㎡","imgs":["17e516_072ea2ae03044e31a19413361bbfa271~mv2.jpg","17e516_50aba28fc0724dacb21d939f50d50ffb~mv2.jpg","17e516_06de76487122407e81adedd6197223f2~mv2.jpg","17e516_6cba45f896934d9690e907f528a02b1c~mv2.jpg","17e516_bf57ec76be1a4d639e3d92960b94b0ca~mv2.jpg","17e516_149b9aee01fb44d6b351bd22c0f4c498~mv2.jpg"]},{"slug":"nondhyeon","title":"논현동 근린생활시설","tags":["COMMERCIAL"],"display":"Commercial","location":"Nonhyeon-dong, Gangnam-gu, Seoul","year":"2025","program":"Commercial","status":"Design Proposal","site":"394.20㎡","gross":"1,036.02㎡","imgs":["17e516_09046a92d6d34337a7d00e24b1566acd~mv2.jpg","17e516_ea8b36faf42c4bb39d9b2226469e07ef~mv2.jpg","17e516_cd717ee66dfd467b990d3b07c751a7be~mv2.jpg","17e516_735120e98c044396b9cb11013637dda6~mv2.jpg","17e516_6b573573f2ca487cbe4aeb6117d1f884~mv2.jpg","17e516_35fc5b3bc30f41fa9cf38318bb8567a3~mv2.jpg"]},{"slug":"ami","title":"아미리 농업인민박","tags":["RESIDENTIAL"],"display":"Residential + Guest house","location":"Ami-ri, Misan-myeon, Yeoncheon","year":"2020","program":"Residential + Guest house","status":"Design Proposal","site":"413.00㎡","gross":"228.04㎡","imgs":["17e516_202a426c2f8b4d08aefba1ac415d27c8~mv2.jpg","17e516_cae9b63b1477429295e40acfbe833271~mv2.jpg","17e516_9da090cc60134a059e3edcbafa9bb47e~mv2.jpg","17e516_5ddc1a9b2cfd4e4696627feba6107243~mv2.jpg","17e516_aece0952bcfc473db02f8330c10bfe33~mv2.jpg","17e516_5abc3f750bf24a998bb21e2e8745f424~mv2.jpg","17e516_f9d4d54cd120406b936c28514446c060~mv2.jpg","17e516_c301f7506bb24ad2bd11006dc7b8d5b6~mv2.jpg","17e516_bb7c579e40f54a9d953e2f30ae9c1e60~mv2.jpg","17e516_0b907fdea9b24c3db1c2e815a9dbca91~mv2.jpg","17e516_c6c7a333da6f431d99e3b50cac5c5edc~mv2.jpg","17e516_0742f0e8910c4619a67a46d07816606f~mv2.jpg"]},{"slug":"sindang","title":"신당동 단독주택","tags":["RESIDENTIAL"],"display":"Residential","location":"Sindang-dong, Jung-gu, Seoul","year":"2016","program":"Residential","status":"Design Proposal","site":"93.12㎡","gross":"178.56㎡","imgs":["17e516_b342ea402cb94aa989660cd811740095~mv2.jpg","17e516_204a1a64b17144478d818be28a0464e6~mv2.jpg","17e516_429f1dfda78b43de9ac94a91efdef0d8~mv2.jpg","17e516_5c1ba219d894479496c5415936e1329f~mv2.jpg","17e516_a258a545e2014e06a8f04090710b804c~mv2.jpg","17e516_9184c46f8a244c4aa175e2343c2c0830~mv2.jpg","17e516_05afca36fc374062b08d5570dae3a014~mv2.jpg","17e516_5334b80fa7dd42d0ada8497733c409ba~mv2.jpg","17e516_be2a4b362a344f5c8f19ca9f408dc7fc~mv2.jpg","17e516_91923d49cab2404499156cf90fbfdb1d~mv2.jpg","17e516_208341d0e8a5453abbece08383500e08~mv2.jpg","17e516_e91955ffdff54a08a6d859f815dda15d~mv2.jpg","17e516_b6f16de02c20431087ed3e6ecce5aec2~mv2.jpg","17e516_77f66ec6f97449b5b15087395397d81d~mv2.jpg","17e516_d3becda9ad5c44baaea7827f86862eed~mv2.jpg","17e516_f8f31b3f17fb4c3fa38895cacd590859~mv2.jpg","17e516_971ab00771c440fcbd0afce16dc6c241~mv2.jpg","17e516_52fb91d36c9340e89b4f5a4443023fbc~mv2.jpg","17e516_20eb520307384871a9082ca1f6cfd587~mv2.jpg","17e516_2e0abe31b6644aa297578cd2585955bf~mv2.jpg","17e516_f53f246803964c5a9b4f7292dc12b1d4~mv2.jpg","17e516_6ac4f8931af34eb7a0ef382c99618b7a~mv2.jpg","17e516_e11d675fe4bb40469f6ef491c6bb3257~mv2.jpg","17e516_79afe8770457478ba46e18fabfb0429e~mv2.jpg","17e516_afb31aa147e14280906c61d3243185bf~mv2.jpg","17e516_668781e450cd4aad8870b9492758ad64~mv2.jpg","17e516_70a35abc5f5040168e927920d4578026~mv2.jpg"]},{"slug":"yanggeun","title":"양근리 근린생활시설","tags":["COMMERCIAL"],"display":"Commercial","location":"Yanggeun-ri, Yangpyeong-eup, Yangpyeong","year":"2024","program":"Commercial","status":"Design Proposal","site":"309.00㎡","gross":"556.07㎡","imgs":["17e516_9c575a51cb40431e85f380ee994ed602~mv2.jpg","17e516_80c6a9c9f8f0472e8007cd17ae429b24~mv2.jpg","17e516_30dfcb95fc6c49ec998dd2a4a2b95b72~mv2.jpg","17e516_cd630ff73b024cd393b29ed744d5297c~mv2.jpg"]},{"slug":"neung","title":"능동 다가구주택","tags":["RESIDENTIAL"],"display":"Residential","location":"Neung-dong, Gwangjin-gu, Seoul","year":"2024","program":"Residential","status":"Design Proposal","site":"139.88㎡","gross":"277.83㎡","imgs":["17e516_c551186f0a3f40b4b6c302a1d654566c~mv2.jpg","17e516_3d34f712d3cb4e63bf0d659aae61c1ff~mv2.jpg","17e516_e4ed7ce81037405ea15bb5d578154033~mv2.jpg"]},{"slug":"gangil","title":"강일동 다가구주택","tags":["RESIDENTIAL"],"display":"Residential","location":"Gangil-dong, Gangdong-gu, Seoul","year":"2024","program":"Residential","status":"Design Proposal","site":"164.50㎡","gross":"245.69㎡","imgs":["17e516_b61ca48833374f2fa88f27e84f99ba83~mv2.jpg","17e516_79e6a7cfc88049d4bd94539ec308436a~mv2.jpg","17e516_6709cfafe6e94c2293dbf0924712a150~mv2.jpg"]},{"slug":"mokdong","title":"목동 근린생활시설","tags":["COMMERCIAL"],"display":"Commercial","location":"Mok-dong, Yangcheon-gu, Seoul","year":"2024","program":"Commercial","status":"Design Proposal","site":"164.30㎡","gross":"320.29㎡","imgs":["17e516_0e6e30cd7cfd4a489d5a4df41362ecb0~mv2.jpg","17e516_7086ecaa44144c05b74c8087bf0a219e~mv2.jpg"]},{"slug":"pung","title":"풍동 다가구주택","tags":["RESIDENTIAL"],"display":"Residential","location":"Pung-dong, Ilsandong-gu, Goyang","year":"2019","program":"Residential","status":"Design Proposal","site":"364.30㎡","gross":"271.79㎡","imgs":["17e516_a7f883acabe34594a1f87d223bdbb9c0~mv2.jpg","17e516_ceac6ce064b74fcb9789342a99bf3776~mv2.jpg","17e516_ddf0567cdd064dbc8b3867ccce6aa7a6~mv2.jpg"]}],U="https://static.wixstatic.com/media/";
+const q=new URLSearchParams(location.search),page=q.get('page')||'home',slug=q.get('project');
+const href=(pg,pr)=>pr?('/?project='+encodeURIComponent(pr)):('/?page='+pg);
+const im=(f,a,l=true)=>'<img src="'+U+f+'" alt="'+a+'" '+(l?'loading="lazy"':'')+'>';
+const header='<header class="site-header"><a class="brand" href="/">WE.YO</a><nav class="desktop-nav"><a href="'+href('projects')+'">PROJECTS</a><a href="'+href('studio')+'">STUDIO</a><a href="'+href('contact')+'">CONTACT</a></nav><button class="mobile-toggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button></header><div class="mobile-menu"><nav><a href="'+href('projects')+'">Projects</a><a href="'+href('studio')+'">Studio</a><a href="'+href('contact')+'">Contact</a></nav><small>WE.YO ARCHITECTS</small></div>';
+const footer='<footer class="footer"><div><span class="footer-label">WE.YO</span><div class="footer-kicker"><span class="phrase-line1">‘위요’ · ‘surround’ ·</span><span class="phrase-line2">‘圍繞’</span></div></div><div class="middle"><span class="footer-label">Studio</span>건축사사무소 위요<br><a class="text-link" href="tel:+827080802229">070. 8080. 2229</a><br><a class="text-link" href="mailto:weyoarch@gmail.com">weyoarch@gmail.com</a></div><div><span class="footer-label">Follow</span><a class="text-link" href="https://www.instagram.com/we.yo.architects/" target="_blank">Instagram</a><br><a class="text-link" href="https://www.facebook.com/profile.php?id=61562161161529" target="_blank">Facebook</a></div><div class="right copyright">ⓒ 2026. WE.YO.architects.<br>All rights reserved.</div></footer>';
+function card(p){return '<a class="archive-card reveal" href="'+href('',p.slug)+'"><div class="archive-image">'+im(p.imgs[0],p.title)+'</div><div class="archive-caption"><strong>'+p.title+'</strong><span>'+p.display+'<br>'+p.location.split(',')[0]+' · '+p.year+'</span></div></a>'}
+function home(){return '<main><section class="hero" data-hero>'+P.slice(0,4).map((p,i)=>'<div class="hero-slide '+(i?'':'active')+'" style="background-image:url('+U+p.imgs[0]+')"><div class="hero-meta"><div class="hero-count">0'+(i+1)+' / 04</div><a class="hero-title" href="'+href('',p.slug)+'">'+p.title+'</a><div class="hero-info">'+p.display+'<br>'+p.location.split(',')[0]+'<br>'+p.year+'</div></div></div>').join('')+'<div class="hero-controls"><button data-prev>PREV</button><button data-next>NEXT</button></div></section><section class="statement reveal"><div class="statement-mark">圍繞</div><div class="statement-copy"><div class="eyebrow">WE.YO / SURROUND</div><p>삶의 형태는 그 사람의 일상을 위요하는 공간으로부터 결정된다는 생각을 바탕으로 건축에 대한 다양한 고민과 작업을 이어나가고 있습니다.</p></div></section><section class="selected"><div class="section-head"><h2>SELECTED WORKS</h2><span>01 — 05</span></div><div>'+P.slice(0,5).map(p=>'<article class="work-item reveal"><div class="work-block"><a class="work-media" href="'+href('',p.slug)+'">'+im(p.imgs[0],p.title)+'</a><div class="work-caption"><h3>'+p.title+'</h3><p>'+p.display+'<br>'+p.location.split(',')[0]+'<br>'+p.year+'</p></div></div></article>').join('')+'</div></section><a class="all-projects-cta reveal" href="'+href('projects')+'"><span>ALL PROJECTS</span><span>→</span></a><section class="studio-tease reveal"><div class="left">STUDIO / WE.YO</div><div class="right"><blockquote class="brand-phrase"><span class="phrase-line1">‘위요’ · ‘surround’ ·</span><span class="phrase-line2">‘圍繞’</span></blockquote><a class="text-link" href="'+href('studio')+'">ABOUT THE STUDIO →</a></div></section></main>'}
+function projects(){return '<main class="page-main"><section class="page-title"><h1>Projects</h1><p>Selected works by WE.YO Architects.</p></section><div class="filters" data-filters>'+['ALL','RESIDENTIAL','COMMERCIAL','RENOVATION','COMPETITION'].map((x,i)=>'<button class="filter-btn '+(i?'':'active')+'" data-filter="'+x+'">'+x+'</button>').join('')+'</div><section class="archive-grid" data-archive>'+P.map(card).join('')+'</section></main>'}
+function studio(){return '<main class="page-main"><section class="page-title"><h1>Studio</h1><p>‘위요’ · ‘surround’ · ‘圍繞’</p></section><section class="studio-grid reveal"><div class="studio-word">圍繞</div><div class="studio-philosophy"><div class="eyebrow">WE.YO / SURROUND</div><p>삶의 형태는 그 사람의 일상을 위요하는 공간으로부터 결정된다는 생각을 바탕으로 건축에 대한 다양한 고민과 작업을 이어나가고 있습니다.</p></div></section><section class="people"><article class="person reveal"><h2>이경섭<br><span style="font-size:.42em;font-family:Arial">Lee Kyungsub</span></h2><div class="bio"><div><b>PROFILE</b>대한민국 건축사 | KIRA<br>경희대학교 건축학 석사 | M.Arch. Kyunghee Univ.</div><div><b>CAREER</b>2024 — 건축사사무소 위요<br>2021 — 2024 조성욱 건축사사무소<br>2019 — 2020 쿠오타 건축사사무소<br>2015 — 2018 스페이스연 건축사사무소</div></div></article><article class="person reveal"><h2>서인지<br><span style="font-size:.42em;font-family:Arial">Seo Inji</span></h2><div class="bio"><div><b>PROFILE</b>대한민국 건축사 | KIRA<br>실내건축기사 | Engineer Interior Architecture</div><div><b>CAREER</b>2026 — 건축사사무소 위요<br>2019 — 2026 나우동인 건축사사무소<br>2013 — 2018 이가종합건축사사무소</div></div></article></section></main>'}
+function contact(){return '<main class="page-main"><section class="page-title"><h1>Contact</h1><p>WE.YO Architects</p></section><section class="contact-wrap"><div class="contact-primary">WE.YO<br>ARCHITECTS</div><div class="contact-list"><div class="contact-row"><span>EMAIL</span><span><a href="mailto:weyoarch@gmail.com">weyoarch@gmail.com</a></span></div><div class="contact-row"><span>TELEPHONE</span><span><a href="tel:+827080802229">070. 8080. 2229</a></span></div><div class="contact-row"><span>INSTAGRAM</span><span><a href="https://www.instagram.com/we.yo.architects/" target="_blank">@we.yo.architects</a></span></div></div></section></main>'}
+function detail(slug){const p=P.find(x=>x.slug===slug)||P[0],i=P.indexOf(p),pr=P[(i-1+P.length)%P.length],nx=P[(i+1)%P.length];document.title=p.title+' — WE.YO ARCHITECTS';const layouts=['wide','portrait','full','pair'];let gallery='';for(let n=0;n<p.imgs.length;n++){if(n>0 && n%7===0)gallery+='<div class="gallery-row full reveal"><div class="gallery-img">'+im(p.imgs[n],p.title)+'</div></div>';else if(n%5===1)gallery+='<div class="gallery-row portrait reveal"><div class="gallery-img">'+im(p.imgs[n],p.title)+'</div></div>';else gallery+='<div class="gallery-row wide reveal"><div class="gallery-img">'+im(p.imgs[n],p.title)+'</div></div>';}return '<main data-detail><section class="detail-hero">'+im(p.imgs[0],p.title,false)+'</section><section class="detail-intro reveal"><h1 class="detail-title">'+p.title+'</h1><div class="detail-meta-top">'+p.display+'<br>'+p.location+'<br>'+p.year+'</div></section><section class="detail-info reveal">'+[['LOCATION',p.location],['PROGRAM',p.program],['STATUS',p.status],['YEAR',p.year],['SITE AREA',p.site],['GROSS FLOOR AREA',p.gross]].map(x=>'<div class="info-cell"><label>'+x[0]+'</label><div>'+x[1]+'</div></div>').join('')+'</section><section class="gallery">'+gallery+'</section><nav class="project-nav"><a href="'+href('',pr.slug)+'">← PREVIOUS PROJECT</a><a href="'+href('',nx.slug)+'">NEXT PROJECT →</a></nav></main>'}
+let content=slug?detail(slug):page==='projects'?projects():page==='studio'?studio():page==='contact'?contact():home();document.querySelector('#app').innerHTML=header+content+footer;
+const hd=document.querySelector('.site-header'),hero=document.querySelector('.hero');
+function setHeroHeaderTone(slide){
+  if(!hero||!slide||scrollY>hero.offsetHeight-90)return;
+  const bg=(slide.style.backgroundImage||'').match(/url\([\"']?(.*?)[\"']?\)/);
+  if(!bg||!bg[1]){hd.classList.add('hero-dark');hd.classList.remove('hero-light');return;}
+  const img=new Image();
+  img.crossOrigin='anonymous';
+  img.onload=()=>{
+    try{
+      const cw=Math.min(240,img.naturalWidth),ch=Math.min(90,img.naturalHeight);
+      const c=document.createElement('canvas');c.width=cw;c.height=ch;const x=c.getContext('2d',{willReadFrequently:true});
+      const viewW=innerWidth,viewH=hero.clientHeight,ir=img.naturalWidth/img.naturalHeight,vr=viewW/viewH;
+      let sx=0,sy=0,sw=img.naturalWidth,sh=img.naturalHeight;
+      if(ir>vr){sw=img.naturalHeight*vr;sx=(img.naturalWidth-sw)/2}else{sh=img.naturalWidth/vr;sy=(img.naturalHeight-sh)/2}
+      const headerH=Math.min(120,viewH);const sampleH=Math.max(1,sh*(headerH/viewH));
+      x.drawImage(img,sx,sy,sw,sampleH,0,0,cw,ch);
+      const d=x.getImageData(0,0,cw,ch).data;let total=0,count=0;
+      for(let i=0;i<d.length;i+=16){const r=d[i],g=d[i+1],b=d[i+2];total+=(0.2126*r+0.7152*g+0.0722*b);count++;}
+      const light=total/count>155;
+      hd.classList.toggle('hero-light',light);hd.classList.toggle('hero-dark',!light);
+    }catch(e){hd.classList.add('hero-dark');hd.classList.remove('hero-light')}
+  };
+  img.onerror=()=>{hd.classList.add('hero-dark');hd.classList.remove('hero-light')};
+  img.src=bg[1];
+}
+if(hero){hd.classList.add('on-hero','hero-dark');const on=()=>{const s=scrollY>hero.offsetHeight-90;hd.classList.toggle('scrolled',s);hd.classList.toggle('on-hero',!s);if(s){hd.classList.remove('hero-light','hero-dark')}else{setHeroHeaderTone(document.querySelector('.hero-slide.active'))}};addEventListener('scroll',on,{passive:true});on()}
+const mb=document.querySelector('.mobile-menu'),btn=document.querySelector('.mobile-toggle');btn.onclick=()=>{const o=mb.classList.toggle('open');btn.classList.toggle('open',o);btn.setAttribute('aria-label',o?'메뉴 닫기':'메뉴 열기');document.body.style.overflow=o?'hidden':'';document.body.classList.toggle('menu-open',o)};
+const O=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');O.unobserve(x.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(x=>O.observe(x));
+if(hero){let i=0,S=[...document.querySelectorAll('.hero-slide')],show=n=>{S[i].classList.remove('active');i=(n+S.length)%S.length;S[i].classList.add('active');setHeroHeaderTone(S[i])};setHeroHeaderTone(S[i]);document.querySelector('[data-prev]').onclick=()=>show(i-1);document.querySelector('[data-next]').onclick=()=>show(i+1);setInterval(()=>show(i+1),7000)}
+const ar=document.querySelector('[data-archive]'),fr=document.querySelector('[data-filters]');if(ar&&fr){fr.querySelectorAll('button').forEach(b=>b.onclick=()=>{fr.querySelectorAll('button').forEach(x=>x.classList.remove('active'));b.classList.add('active');const f=b.dataset.filter;ar.innerHTML=(f==='ALL'?P:P.filter(p=>p.tags.includes(f))).map(card).join('');ar.querySelectorAll('.reveal').forEach(x=>O.observe(x))})}
+</script></body></html>
