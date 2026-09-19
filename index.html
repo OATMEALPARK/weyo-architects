@@ -205,10 +205,9 @@ async function loadCMS(){
     if(!sr.error&&sr.data?.length) SELECTED=sr.data.filter(x=>x.projects?.is_published).map(x=>({...x.projects,imgs:(x.projects.images||[]).map(mediaUrl)}));
   }catch(e){console.warn('CMS fallback active',e)}
 }
-"https://static.wixstatic.com/media/";
 const q=new URLSearchParams(location.search),page=q.get('page')||'home',slug=q.get('project');
 const href=(pg,pr)=>pr?('/?project='+encodeURIComponent(pr)):('/?page='+pg);
-const im=(f,a,l=true)=>'<img src="'+U+f+'" alt="'+a+'" '+(l?'loading="lazy"':'')+'>';
+const im=(f,a,l=true)=>'<img src="'+mediaUrl(f)+'" alt="'+a+'" '+(l?'loading="lazy"':'')+'>';
 const header='<header class="site-header"><a class="brand" href="/">WE.YO</a><nav class="desktop-nav"><a href="'+href('projects')+'">PROJECTS</a><a href="'+href('studio')+'">STUDIO</a><a href="'+href('contact')+'">CONTACT</a></nav><button class="mobile-toggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button></header><div class="mobile-menu"><nav><a href="'+href('projects')+'">Projects</a><a href="'+href('studio')+'">Studio</a><a href="'+href('contact')+'">Contact</a></nav><small>WE.YO ARCHITECTS</small></div>';
 const footer='<footer class="footer"><div><span class="footer-label">WE.YO</span><div class="footer-kicker"><span class="phrase-line1">‘위요’ · ‘surround’ ·</span><span class="phrase-line2">‘圍繞’</span></div></div><div class="middle"><span class="footer-label">Studio</span>건축사사무소 위요<br><a class="text-link" href="tel:+827080802229">070. 8080. 2229</a><br><a class="text-link" href="mailto:weyoarch@gmail.com">weyoarch@gmail.com</a></div><div><span class="footer-label">Follow</span><a class="text-link" href="https://www.instagram.com/we.yo.architects/" target="_blank">Instagram</a><br><a class="text-link" href="https://www.facebook.com/profile.php?id=61562161161529" target="_blank">Facebook</a></div><div class="right copyright">ⓒ 2026. WE.YO.architects.<br>All rights reserved.</div></footer>';
 function card(p){return '<article class="archive-card reveal"><a class="archive-image" href="'+href('',p.slug)+'">'+im(p.imgs[0],p.title)+'</a><div class="archive-caption"><strong>'+p.title+'</strong><span>'+p.display+'<br>'+p.location.split(',')[0]+' · '+p.year+'</span></div></article>'}
