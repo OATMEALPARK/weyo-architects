@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# admin.html is crawlable so crawlers can read its noindex,nofollow directive.
+Sitemap: https://www.we-yo.com/sitemap.xml
