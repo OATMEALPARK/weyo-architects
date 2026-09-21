@@ -1,6 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "node --test tests/ssr.test.cjs",
+  "outputDirectory": ".",
   "functions": {
     "api/site.js": {
       "includeFiles": "index.html",
