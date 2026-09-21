@@ -21,10 +21,10 @@ function render(route,data){
   const image=project?.imgs[0]||data.HERO[0]?.heroDesktop||data.P[0]?.imgs[0]||'https://rmtfmegufylujrzuvczi.supabase.co/storage/v1/object/public/project-media/migrated/haengdang/001-17e516_9cb5ac6c996e473ba8ca84a4d0dd5b42-mv2.jpg';
   const meta=metadata(route,project,image);
   const body=valid?renderer.runInNewContext({...data,slug,page:route.slice(1)||'home',mediaUrl},{timeout:1000}):'<main class="page-main"><section class="page-title"><h1>404</h1><p>페이지를 찾을 수 없습니다. <a href="/projects">프로젝트 보기</a></p></section></main>';
-  let html=template.replace(/<!-- SEO:START -->[\s\S]*?<!-- SEO:END -->/,head(meta,!valid)).replace('<div id="app"></div>',()=>'<div id="app">'+body+'</div>');
+  let html=template.replace(/<!-- SEO:START -->[\s\S]*?<!-- SEO:END -->/,head(meta,!valid||data.unavailable)).replace('<div id="app"></div>',()=>'<div id="app">'+body+'</div>');
   if(valid)html=html.replace('<script src=',()=>'<script id="cms-snapshot" type="application/json">'+json(data)+'</script><script src=');
   else html=html.replace(/<script src=[\s\S]*<\/script>/,'');
-  return {html,status:valid?200:404};
+  return {html,status:data.unavailable?503:valid?200:404};
 }
 async function handler(req,res){
   const url=new URL(req.url,'https://placeholder.invalid');
@@ -38,14 +38,22 @@ async function handler(req,res){
     else if(['home','projects','studio','contact'].includes(url.searchParams.get('page')))target=url.searchParams.get('page')==='home'?'/':'/'+url.searchParams.get('page');
     else if(clean==='/index.html')target='/';
   }
-  if(clean==='/index-project-spacing.html')target='/';
   if(target){res.statusCode=301;res.setHeader('Location',target);return res.end();}
   const route=clean.startsWith('/projects/')?'/projects/'+encodeURIComponent(clean.slice(10)):clean;
   if(rawPath!==route){res.statusCode=301;res.setHeader('Location',route+url.search);return res.end();}
   try{
     let data;
     try{data=await loadCMS();res.setHeader('Cache-Control','public, max-age=0, s-maxage=60')}
-    catch(cmsError){console.warn('CMS read failed; serving fallback:',cmsError.message);data=fallbackData;res.setHeader('Cache-Control','public, max-age=0, s-maxage=30');res.setHeader('X-WEYO-CMS','fallback')}
+    catch(cmsError){
+      console.warn('CMS read failed; serving fallback:',cmsError.message);
+      data={...fallbackData,unavailable:true};
+      res.setHeader('Cache-Control','no-store');
+      res.setHeader('Retry-After','60');
+      res.setHeader('X-WEYO-CMS','fallback');
+      res.setHeader('X-Robots-Tag','noindex,nofollow');
+      // Do not publish an outdated project list as a current sitemap during an outage.
+      if(route==='/sitemap.xml'){res.statusCode=503;return res.end('Temporarily unavailable. Please try again.');}
+    }
     if(route==='/sitemap.xml'){res.setHeader('Content-Type','application/xml; charset=utf-8');return res.end(sitemap(data));}
     const result=render(route,data);res.statusCode=result.status;
     res.setHeader('Content-Type','text/html; charset=utf-8');

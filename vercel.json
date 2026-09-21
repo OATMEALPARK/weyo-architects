@@ -6,53 +6,33 @@
       "maxDuration": 15
     }
   },
-  "headers": [
+  "routes": [
     {
-      "source": "/admin.html",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex,nofollow"
-        }
-      ]
+      "src": "/admin/?",
+      "status": 307,
+      "headers": {
+        "Location": "/admin.html",
+        "X-Robots-Tag": "noindex,nofollow"
+      }
     },
     {
-      "source": "/admin",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex,nofollow"
-        }
-      ]
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/api/site"
+      "src": "/admin\\.html",
+      "dest": "/admin.html",
+      "headers": {
+        "X-Robots-Tag": "noindex,nofollow"
+      }
     },
     {
-      "source": "/index.html",
-      "destination": "/api/site"
+      "src": "/robots\\.txt",
+      "dest": "/robots.txt"
     },
     {
-      "source": "/index-project-spacing.html",
-      "destination": "/api/site"
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
     },
     {
-      "source": "/sitemap.xml",
-      "destination": "/api/site"
-    },
-    {
-      "source": "/((?!admin\\.html$|robots\\.txt$|api/).*)",
-      "destination": "/api/site"
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/admin",
-      "destination": "/admin.html",
-      "permanent": false
+      "src": "/.*",
+      "dest": "/api/site"
     }
   ]
 }
