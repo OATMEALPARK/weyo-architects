@@ -6,7 +6,13 @@ const {ORIGIN,esc,json,metadata,head}=require('../lib/seo');
 const legacy=require('../lib/legacy-urls.json');
 const template=fs.readFileSync(path.join(process.cwd(),'index.html'),'utf8');
 // Reuse the exact existing page renderers; CSS and CMS editing code stay unchanged.
-const renderSource=template.slice(template.indexOf('const href='),template.indexOf('const renderCurrent='));
+function extractRenderSource(html){
+  const start=html.indexOf('const href='),end=html.indexOf('const renderCurrent=');
+  if(start<0||end<=start)throw new Error('SSR renderer markers missing or out of order: const href= / const renderCurrent=');
+  if(!html.includes('<!-- SEO:START -->')||!html.includes('<!-- SEO:END -->')||!html.includes('<div id="app"></div>'))throw new Error('SSR template markers missing: SEO or app');
+  return html.slice(start,end);
+}
+const renderSource=extractRenderSource(template);
 const fallbackMatch=template.match(/const FALLBACK_P=(\[[\s\S]*?\]);/);
 const fallbackData={P:fallbackMatch?JSON.parse(fallbackMatch[1]).map(p=>({...p,imgs:(p.imgs||[]).map(mediaUrl)})):[],HERO:[],SELECTED:[]};
 const renderer=new vm.Script(renderSource+";header+(slug?detail(slug):page==='projects'?projects():page==='studio'?studio():page==='contact'?contact():page==='404'?notFound():home())+footer;");
@@ -21,12 +27,19 @@ function render(route,data){
   const image=project?.imgs[0]||data.HERO[0]?.heroDesktop||data.P[0]?.imgs[0]||'https://rmtfmegufylujrzuvczi.supabase.co/storage/v1/object/public/project-media/migrated/haengdang/001-17e516_9cb5ac6c996e473ba8ca84a4d0dd5b42-mv2.jpg';
   const meta=metadata(route,project,image);
   const body=valid?renderer.runInNewContext({...data,slug,page:route.slice(1)||'home',mediaUrl},{timeout:1000}):'<main class="page-main"><section class="page-title"><h1>404</h1><p>페이지를 찾을 수 없습니다. <a href="/projects">프로젝트 보기</a></p></section></main>';
-  let html=template.replace(/<!-- SEO:START -->[\s\S]*?<!-- SEO:END -->/,head(meta,!valid||data.unavailable)).replace('<div id="app"></div>',()=>'<div id="app">'+body+'</div>');
+  let html=template.replace(/<!-- SEO:START -->[\s\S]*?<!-- SEO:END -->/,head(meta,process.env.VERCEL_ENV!=='production'||!valid||data.unavailable)).replace('<div id="app"></div>',()=>'<div id="app">'+body+'</div>');
+  if(route==='/'&&valid){
+    const hero=data.HERO[0]||data.P[0];
+    const desktop=hero&&(hero.heroDesktop||hero.imgs[0]);
+    const mobile=hero&&(hero.heroMobile||desktop);
+    if(desktop)html=html.replace('</head>',()=>'<link rel="preload" as="image" fetchpriority="high" media="(min-width: 821px)" href="'+esc(desktop)+'"><link rel="preload" as="image" fetchpriority="high" media="(max-width: 820px)" href="'+esc(mobile)+'"></head>');
+  }
   if(valid)html=html.replace('<script src=',()=>'<script id="cms-snapshot" type="application/json">'+json(data)+'</script><script src=');
   else html=html.replace(/<script src=[\s\S]*<\/script>/,'');
   return {html,status:data.unavailable?503:valid?200:404};
 }
 async function handler(req,res){
+  if(process.env.VERCEL_ENV!=='production')res.setHeader('X-Robots-Tag','noindex,nofollow');
   const url=new URL(req.url,'https://placeholder.invalid');
   const rawPath=url.pathname;
   let decoded;
@@ -67,4 +80,5 @@ async function handler(req,res){
 }
 module.exports=handler;
 module.exports.render=render;
+module.exports.extractRenderSource=extractRenderSource;
 module.exports.sitemap=sitemap;
