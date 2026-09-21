@@ -7,7 +7,7 @@ const legacy=require('../lib/legacy-urls.json');
 const template=fs.readFileSync(path.join(process.cwd(),'index.html'),'utf8');
 // Reuse the exact existing page renderers; CSS and CMS editing code stay unchanged.
 const renderSource=template.slice(template.indexOf('const href='),template.indexOf('const renderCurrent='));
-const fallbackMatch=template.match(/const FALLBACK_P=(\[[\s\S]*?\]),U=/);
+const fallbackMatch=template.match(/const FALLBACK_P=(\[[\s\S]*?\]);/);
 const fallbackData={P:fallbackMatch?JSON.parse(fallbackMatch[1]).map(p=>({...p,imgs:(p.imgs||[]).map(mediaUrl)})):[],HERO:[],SELECTED:[]};
 const renderer=new vm.Script(renderSource+";header+(slug?detail(slug):page==='projects'?projects():page==='studio'?studio():page==='contact'?contact():page==='404'?notFound():home())+footer;");
 function sitemap(data){
@@ -18,7 +18,7 @@ function render(route,data){
   const slug=route.startsWith('/projects/')?decodeURIComponent(route.slice(10)):null;
   const project=slug?data.P.find(p=>p.slug===slug):null;
   const valid=slug?!!project:['/','/projects','/studio','/contact'].includes(route);
-  const image=project?.imgs[0]||data.HERO[0]?.heroDesktop||data.P[0]?.imgs[0]||'https://static.wixstatic.com/media/17e516_9cb5ac6c996e473ba8ca84a4d0dd5b42~mv2.jpg';
+  const image=project?.imgs[0]||data.HERO[0]?.heroDesktop||data.P[0]?.imgs[0]||'https://rmtfmegufylujrzuvczi.supabase.co/storage/v1/object/public/project-media/migrated/haengdang/001-17e516_9cb5ac6c996e473ba8ca84a4d0dd5b42-mv2.jpg';
   const meta=metadata(route,project,image);
   const body=valid?renderer.runInNewContext({...data,slug,page:route.slice(1)||'home',mediaUrl},{timeout:1000}):'<main class="page-main"><section class="page-title"><h1>404</h1><p>페이지를 찾을 수 없습니다. <a href="/projects">프로젝트 보기</a></p></section></main>';
   let html=template.replace(/<!-- SEO:START -->[\s\S]*?<!-- SEO:END -->/,head(meta,!valid)).replace('<div id="app"></div>',()=>'<div id="app">'+body+'</div>');
